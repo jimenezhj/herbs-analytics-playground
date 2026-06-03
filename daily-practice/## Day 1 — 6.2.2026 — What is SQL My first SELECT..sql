@@ -64,4 +64,3 @@
 --FROM Sales.SalesOrderHeader
 
 
---**You Win Today If:** All practice queries ran without errors. You wrote 3 queries from scratch that returned correct results.
