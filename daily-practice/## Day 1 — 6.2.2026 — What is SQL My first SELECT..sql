@@ -34,8 +34,11 @@
 --	LastName
 --FROM Person.person;
 
----- 4. Count rows
+---- 4. Count rows - counts every rows including nulls
 --SELECT COUNT(*) FROM Person.Person;
+
+--SELECT COUNT(*) FROM Person.person;
+
 --```
 
 --Notice: `Person.Person` has a dot. The first `Person` is a **schema** (a folder inside the database). The second `Person` is the **table name**. AdventureWorks uses schemas to group related tables. Every fully-qualified table name is `Schema.TableName`.
@@ -43,16 +46,22 @@
 --**Self-test (30 min):** Write each of these from scratch, then run:
 
 --1. Show 5 rows from `Production.Product` — just the columns `Name` and `ListPrice`.
+
+--SELECT TOP 5
+--	Name,
+--	ListPrice
+--FROM Production.Product
+--ORDER BY ListPrice DESC
+
 --2. Show all columns from the first 3 rows of `Sales.Customer`.
+
+--SELECT TOP 3 *
+--FROM Sales.Customer;
+
 --3. Count the total number of rows in `Sales.SalesOrderHeader`.
 
---**Daily commit:**
---```
---cd cre-data-science-portfolio
---mkdir daily-practice -p
---echo "Day 1 queries" > daily-practice/day-01.sql
---# paste your queries into the file
---git add . && git commit -m "Day 1: SELECT basics" && git push
---```
+--SELECT COUNT (*)
+--FROM Sales.SalesOrderHeader
+
 
 --**You Win Today If:** All practice queries ran without errors. You wrote 3 queries from scratch that returned correct results.
