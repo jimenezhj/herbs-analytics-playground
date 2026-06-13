@@ -100,18 +100,80 @@ HAVING AVG(Totaldue) > 5000
 ORDER BY AVGRevenue DESC;
 
 --additional working samples
-SELECT
-	CustomerID,
-	COUNT(*) AS OrderCount
-FROM Sales.SalesOrderHeader
+SELECT	 CustomerID,
+		 COUNT(SalesOrderID) AS OrderCount
+FROM	 Sales.SalesOrderHeader
 GROUP BY CustomerID
-HAVING COUNT(*) >=3
+HAVING	 COUNT(SalesOrderID) >- 5
 ORDER BY OrderCount DESC;
 
-SELECT
-	ProductSubcategoryID,
-	AVG(ListPrice) AS AVGPrice
-FROM Production.Product
-GROUP BY ProductSubcategoryID
-HAVING AVG(ListPrice) > 50
-ORDER BY AVGPrice DESC;
+SELECT	 pc.Name			AS Category,
+		 AVG(p.ListPrice)	AS AvgListPrice
+FROM	 Production.product p
+JOIN	 Production.Productsubcategory	psc ON p.ProductSubcategoryID=psc.ProductSubcategoryID
+JOIN	 Production.ProductCategory		pc  ON psc.ProductCategoryID=pc.ProductCategoryID
+WHERE	 p.listprice > 0
+GROUP BY pc.ProductCategoryID, pc.Name
+HAVING	 AVG(p.ListPrice) > 500
+ORDER BY AvgListPrice;
+
+-- Customers with more than 10 orders (all time)
+
+SELECT		 CustomerID,
+			 COUNT(SalesOrderID) AS OrderCount
+FROM		 Sales.SalesOrderHeader
+GROUP BY	 CustomerID
+HAVING		 COUNT(SalesOrderID) > 10
+ORDER BY	 OrderCount DESC;
+
+-- High-value individual customers in 2013
+
+SELECT		 soh.CustomerID,
+			 CONCAT(p.FirstName,' ',p.LastName)	AS [Customer Name],
+			 COUNT(soh.SalesOrderID)			AS [Order Count],
+			 SUM(soh.TotalDue)					AS [Total Spent]
+FROM		 Sales.SalesOrderHeader soh
+JOIN		 Sales.Customer			c	ON soh.CustomerID = c.CustomerID
+JOIN		 Person.Person			p	ON c.CustomerID = p.BusinessEntityID
+WHERE		 soh.orderdate >= '2013-01-01'
+	AND		 soh.orderdate <  '2014-01-01'
+	AND		 c.PersonID IS NOT NULL
+GROUP BY	 soh.CustomerID, p.FirstName, p.LastName
+HAVING		 SUM(soh.totaldue) > 5000
+ORDER BY	 [Total Spent] DESC;
+
+-- Product subcategories with high average price and multiple products
+
+SELECT		 psc.Name			AS Subcategory,
+			 COUNT(*)			AS ProductCount,
+			 AVG(p.listprice)	AS AvgPrice,
+			 MAX(p.listprice)   AS MaxPrice
+FROM		 Production.Product p
+JOIN		 Production.ProductSubcategory psc ON p.ProductSubcategoryID = psc.ProductSubcategoryID
+WHERE		 p.ListPrice > 0
+GROUP BY	 psc.ProductCategoryID, psc.Name
+HAVING		 AVG(p.listPrice) > 800
+	AND		 COUNT(*) > 3
+ORDER BY	 AvgPrice DESC;
+
+-- Low-lifetime-spend customers (re-engagement candidates)
+SELECT		CustomerID,
+			COUNT(SalesOrderID) AS OrderCount,
+			SUM(TotalDue)		AS Lifetimespend
+FROM		Sales.SalesOrderHeader
+GROUP BY	CustomerID
+HAVING		SUM(TotalDue) < 1000
+ORDER BY	Lifetimespend ASC;
+
+-- Territory revenue with compound HAVING
+SELECT		st.Name					AS Territory,
+			COUNT(soh.SalesOrderID)	AS OrderCount,
+			SUM(soh.TotalDue)		AS TotalRevenue,
+			AVG(soh.TotalDue)		AS AvgOrderValue
+FROM		Sales.SalesOrderHeader	soh
+JOIN		Sales.SalesTerritory	st	ON soh.TerritoryID = st.TerritoryID
+WHERE		soh.OrderDate >= '2013-01-01'
+GROUP BY	st.Name
+HAVING		SUM(soh.TotalDue) > 100000
+	AND		AVG(soh.TotalDue) > 3000
+ORDER BY	TotalRevenue DESC;
