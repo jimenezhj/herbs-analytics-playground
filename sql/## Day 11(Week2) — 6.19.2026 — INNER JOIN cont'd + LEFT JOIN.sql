@@ -190,7 +190,7 @@ LEFT JOIN	sales.SalesOrderHeader AS soh
 	ON		sp.BusinessEntityID = soh.SalesPersonID
 GROUP BY	p.firstname,
 			p.lastname
-ORDER BY	TotalRevenue DESC;
+ORDER BY	TotalRevenue DESC ;
 
 
 
