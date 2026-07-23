@@ -1,0 +1,159 @@
+---- PROPERTIES (10)
+--INSERT INTO dbo.Property (PropertyName, Address, City, Province, AssetClass, YearBuilt, TotalSquareFeet, AcquisitionDate, AcquisitionCost)
+--VALUES
+--    ('Northgate Centre', '2300 Maple Ave', 'Toronto', 'ON', 'Mixed-Use', 1974, 285000, '2005-03-15', 145000000),
+--    ('Riverside Commons', '100 Confederation Dr', 'Mississauga', 'ON', 'Retail', 1973, 225000, '2010-06-22', 195000000),
+--    ('Parkview Centre', '4841 Maple Ave', 'Toronto', 'ON', 'Mixed-Use', 1976, 175000, '2008-11-04', 88000000),
+--    ('Lakeshore Village', '2901 Harbour Rd', 'Toronto', 'ON', 'Retail', 1985, 145000, '2013-02-18', 76000000),
+--    ('Highland Crossing', '1 Summit Mills Dr', 'Vaughan', 'ON', 'Retail', 2004, 195000, '2014-09-30', 88500000),
+--    ('Westbrook Town Centre', '5100 Westbrook Pkwy', 'Mississauga', 'ON', 'Retail', 1989, 175000, '2017-04-12', 95000000),
+--    ('Fairmount Plaza', '6464 Maple Ave', 'Toronto', 'ON', 'Retail', 1969, 95000, '2007-08-25', 42000000),
+--    ('Eastport Town Centre', '1355 Harbourview Rd', 'Pickering', 'ON', 'Retail', 1990, 165000, '2019-12-01', 105000000),
+--    ('Brookfield Plaza', '700 Northview Ave W', 'Toronto', 'ON', 'Retail', 1995, 85000, '2015-07-08', 38000000),
+--    ('Stonebridge Centrum', '700 Ridgeline Rd', 'Ottawa', 'ON', 'Retail', 2002, 105000, '2018-03-19', 52000000);
+
+---- TENANTS (24)
+--INSERT INTO dbo.Tenant (TenantName, Industry, AnchorTenant, ContactEmail) VALUES
+--    ('Loblaw Companies', 'Grocery', 1, 'leasing@loblaw.ca'),
+--    ('Canadian Tire', 'Retail', 1, 'realestate@cantire.com'),
+--    ('Shoppers Drug Mart', 'Pharmacy', 1, 'leasing@shoppers.ca'),
+--    ('Winners HomeSense', 'Retail', 1, 'leasing@winnersgroup.com'),
+--    ('LCBO', 'Liquor', 1, 'leasing@lcbo.com'),
+--    ('Bell Mobility', 'Telecom', 0, 'realestate@bell.ca'),
+--    ('Telus Communications', 'Telecom', 0, 'leasing@telus.com'),
+--    ('Starbucks Coffee', 'Food Service', 0, 'leasing@starbucks.ca'),
+--    ('Tim Hortons', 'Food Service', 0, 'realestate@timhortons.com'),
+--    ('McDonald''s Restaurants', 'Food Service', 0, 'leasing@mcdonalds.ca'),
+--    ('GoodLife Fitness', 'Fitness', 0, 'leasing@goodlife.com'),
+--    ('Cineplex Entertainment', 'Entertainment', 1, 'realestate@cineplex.com'),
+--    ('Indigo Books', 'Retail', 0, 'leasing@indigo.ca'),
+--    ('Apple Canada', 'Electronics', 0, 'realestate@apple.com'),
+--    ('Sport Chek', 'Retail', 0, 'leasing@sportchek.ca'),
+--    ('Lululemon', 'Retail', 0, 'leasing@lululemon.com'),
+--    ('Aritzia', 'Retail', 0, 'leasing@aritzia.com'),
+--    ('H&M Canada', 'Retail', 0, 'realestate@hm.com'),
+--    ('Roots Canada', 'Retail', 0, 'leasing@roots.com'),
+--    ('Quality Office Supplies', 'Professional Services', 0, 'admin@qualityos.com'),
+--    ('Modern Dental Group', 'Healthcare', 0, 'admin@moderndental.ca'),
+--    ('Acme Financial Advisors', 'Financial Services', 0, 'office@acmefinancial.ca'),
+--    ('Northwind Logistics', 'Logistics', 0, 'realestate@northwind.com'),
+--    ('Mainline Software', 'Technology', 0, 'office@mainlinesoftware.com');
+
+---- LEASES (39) — mix of past, current, upcoming expirations across 2024-2032
+--INSERT INTO dbo.Lease (PropertyID, TenantID, LeaseStartDate, LeaseEndDate, BaseMonthlyRent, SquareFeetLeased, SecurityDeposit, RenewalOptions, Status) VALUES
+--    -- Northgate (1)
+--    (1, 1, '2019-01-01', '2029-12-31', 145000, 35000, 290000, 2, 'Active'),
+--    (1, 3, '2020-06-01', '2025-05-31', 22500, 4500, 45000, 1, 'Active'),
+--    (1, 8, '2022-03-01', '2027-02-28', 8500, 1200, 17000, 2, 'Active'),
+--    (1, 14, '2023-09-15', '2028-09-14', 35000, 3200, 70000, 1, 'Active'),
+--    (1, 16, '2021-11-01', '2026-10-31', 18500, 2400, 37000, 2, 'Active'),
+--    -- Riverside Commons (2)
+--    (2, 2, '2018-09-01', '2028-08-31', 95000, 28000, 190000, 3, 'Active'),
+--    (2, 4, '2020-04-15', '2025-04-14', 32000, 12000, 64000, 2, 'Active'),
+--    (2, 12, '2019-10-01', '2026-09-30', 65000, 18000, 130000, 1, 'Active'),
+--    (2, 13, '2021-02-01', '2026-01-31', 18500, 3500, 37000, 2, 'Active'),
+--    (2, 17, '2022-08-01', '2027-07-31', 28000, 2800, 56000, 1, 'Active'),
+--    (2, 18, '2023-04-15', '2028-04-14', 25500, 3100, 51000, 2, 'Active'),
+--    -- Sheppard (3)
+--    (3, 5, '2019-06-01', '2024-05-31', 18000, 4500, 36000, 0, 'Expired'),
+--    (3, 9, '2020-01-15', '2025-01-14', 7500, 1100, 15000, 1, 'Active'),
+--    (3, 11, '2021-05-01', '2026-04-30', 22500, 12000, 45000, 2, 'Active'),
+--    (3, 21, '2022-11-01', '2027-10-31', 12500, 1800, 25000, 1, 'Active'),
+--    -- Lakeshore Village (4)
+--    (4, 1, '2018-04-01', '2028-03-31', 78000, 22000, 156000, 2, 'Active'),
+--    (4, 3, '2021-01-01', '2026-12-31', 15500, 2800, 31000, 1, 'Active'),
+--    (4, 8, '2022-06-01', '2027-05-31', 9500, 1400, 19000, 2, 'Active'),
+--    (4, 19, '2023-08-15', '2028-08-14', 14500, 2200, 29000, 1, 'Active'),
+--    -- Highland Crossing (5)
+--    (5, 2, '2018-11-01', '2028-10-31', 105000, 30000, 210000, 3, 'Active'),
+--    (5, 4, '2020-09-01', '2025-08-31', 38000, 14000, 76000, 2, 'Active'),
+--    (5, 15, '2021-06-01', '2026-05-31', 32000, 8500, 64000, 2, 'Active'),
+--    (5, 12, '2022-02-15', '2027-02-14', 58000, 16000, 116000, 1, 'Active'),
+--    -- Westbrook (6)
+--    (6, 1, '2019-08-01', '2029-07-31', 88000, 25000, 176000, 2, 'Active'),
+--    (6, 3, '2020-12-01', '2025-11-30', 16500, 3000, 33000, 1, 'Active'),
+--    (6, 10, '2022-04-01', '2027-03-31', 12500, 2200, 25000, 2, 'Active'),
+--    (6, 20, '2023-10-15', '2028-10-14', 8500, 1200, 17000, 1, 'Active'),
+--    -- Fairmount (7)
+--    (7, 5, '2020-03-01', '2025-02-28', 14500, 3800, 29000, 0, 'Active'),
+--    (7, 11, '2021-09-01', '2026-08-31', 19500, 11500, 39000, 1, 'Active'),
+--    (7, 22, '2023-01-15', '2028-01-14', 6500, 1500, 13000, 1, 'Active'),
+--    -- Pickering (8)
+--    (8, 2, '2020-05-01', '2030-04-30', 92000, 28000, 184000, 3, 'Active'),
+--    (8, 4, '2021-08-01', '2026-07-31', 30000, 11000, 60000, 2, 'Active'),
+--    (8, 9, '2022-12-01', '2027-11-30', 7500, 1100, 15000, 1, 'Active'),
+--    (8, 23, '2023-06-15', '2028-06-14', 18500, 4500, 37000, 2, 'Active'),
+--    -- Brookfield (9)
+--    (9, 3, '2019-11-01', '2024-10-31', 12500, 2400, 25000, 0, 'Expired'),
+--    (9, 8, '2021-04-01', '2026-03-31', 7500, 1100, 15000, 2, 'Active'),
+--    (9, 24, '2023-03-15', '2028-03-14', 11500, 2200, 23000, 1, 'Active'),
+--    -- Kanata (10)
+--    (10, 1, '2019-05-01', '2029-04-30', 72000, 22000, 144000, 2, 'Active'),
+--    (10, 4, '2021-07-01', '2026-06-30', 28000, 10500, 56000, 2, 'Active'),
+--    (10, 15, '2022-11-15', '2027-11-14', 25000, 7500, 50000, 1, 'Active');
+
+---- AMENDMENTS
+--INSERT INTO dbo.LeaseAmendment (LeaseID, AmendmentDate, AmendmentType, NewMonthlyRent, NewEndDate, Notes) VALUES
+--    (1, '2022-01-01', 'RentEscalation', 152000, NULL, '3% annual escalation'),
+--    (1, '2023-01-01', 'RentEscalation', 156500, NULL, '3% annual escalation'),
+--    (6, '2023-09-01', 'RentEscalation', 99500, NULL, '4.5% escalation'),
+--    (12, '2024-05-31', 'Termination', NULL, '2024-05-31', 'Expired, not renewed'),
+--    (20, '2022-08-15', 'Expansion', 115000, NULL, 'Expanded +3,200 sf'),
+--    (24, '2024-01-01', 'RentEscalation', 91500, NULL, '4% escalation');
+
+
+--WITH months AS (
+--    SELECT DATEADD(MONTH, -n, '2024-12-01') AS SnapshotMonth
+--    FROM (SELECT TOP 24 ROW_NUMBER() OVER (ORDER BY a.object_id) - 1 AS n
+--          FROM sys.all_objects a) AS x
+--),
+--lease_months AS (
+--    SELECT l.LeaseID, m.SnapshotMonth, l.BaseMonthlyRent
+--    FROM dbo.Lease l
+--    CROSS JOIN months m
+--    WHERE m.SnapshotMonth >= l.LeaseStartDate
+--      AND m.SnapshotMonth <= l.LeaseEndDate
+--)
+--INSERT INTO dbo.RentRoll (LeaseID, SnapshotMonth, BilledAmount, CollectedAmount, CollectionStatus)
+--SELECT
+--    LeaseID,
+--    SnapshotMonth,
+--    BaseMonthlyRent,
+--    CASE
+--        WHEN ABS(CHECKSUM(NEWID())) % 100 < 90 THEN BaseMonthlyRent
+--        WHEN ABS(CHECKSUM(NEWID())) % 100 < 97 THEN BaseMonthlyRent * 0.5
+--        ELSE 0
+--    END,
+--    CASE
+--        WHEN ABS(CHECKSUM(NEWID())) % 100 < 90 THEN 'Collected'
+--        WHEN ABS(CHECKSUM(NEWID())) % 100 < 97 THEN 'Partial'
+--        ELSE 'Outstanding'
+--    END
+--FROM lease_months;
+
+--SELECT
+--    (SELECT COUNT(*) FROM dbo.Property) AS Properties,
+--    (SELECT COUNT(*) FROM dbo.Tenant) AS Tenants,
+--    (SELECT COUNT(*) FROM dbo.Lease) AS Leases,
+--    (SELECT COUNT(*) FROM dbo.LeaseAmendment) AS Amendments,
+--    (SELECT COUNT(*) FROM dbo.RentRoll) AS RentRollRows;
+
+--1. The rent roll uses random collection rates. In real property-management data, what actually determines collection timing? List 3-4 factors.
+-- tenant credit quality / payment consistency
+-- lease terms
+-- AR operations -- follow ups and check ins
+-- any external disputes
+
+--2. Run this:
+--```sql
+--SELECT SnapshotMonth, COUNT(*) AS Leases,
+--    SUM(BilledAmount) AS Billed, SUM(CollectedAmount) AS Collected,
+--    SUM(CollectedAmount) * 100.0 / NULLIF(SUM(BilledAmount), 0) AS CollectionPct
+--FROM dbo.RentRoll GROUP BY SnapshotMonth ORDER BY SnapshotMonth;
+--```
+--   Does the actual collection % match the ~94% you'd expect from the random distribution?
+
+--3. Identify one data quality problem this synthetic data has that real production data would also have, and one that real data would not have.
+
+-- too uniform and doesnt factor in real life scenarios
+-- inconsistent outdated lease statuses
